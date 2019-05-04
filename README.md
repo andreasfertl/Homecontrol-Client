@@ -12,7 +12,7 @@ https://github.com/andreasfertl/Homecontrol-Server
 ## Prerequisites:
 Linux
 
-gcc (on Linux)
+gcc
 
 Git
 
