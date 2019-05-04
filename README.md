@@ -1,2 +1,2 @@
 # Homecontrol-Client
-Homecontrol Client application which runs without any HW dependencies
+Homecontrol Client application running on Linux which provides support for HW dependent modules
