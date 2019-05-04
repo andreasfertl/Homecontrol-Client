@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Configuration>
+
+<Logger>
+	<DbgLvl>3</DbgLvl>
+	<LogLvl>3</LogLvl>
+</Logger>
+
+<TCPClient>
+  <IP>10.0.1.127</IP>
+  <Port>5005</Port>
+  <MsgID1>ARCTECH_SWITCH</MsgID1>
+  <MsgID2>BLUETOOTHDEVICE_IN_RANGE</MsgID2>
+  <MsgID3>MANDOLYN_SENSOR</MsgID3>
+</TCPClient>
+  
+<Person>
+	<Name>Phone of 123</Name>
+	<BTDeviceAddr>12:34:56:78:9A:BC</BTDeviceAddr>
+</Person>
+  
+<Person>
+  <Name>Phone of ABC</Name>
+	<BTDeviceAddr>AA:BB:CC:DD:EE:FF</BTDeviceAddr>
+</Person>
+
+<Threads>
+	<ThreadID1>TELLDUSMANAGER</ThreadID1>
+	<CycleTime1>50</CycleTime1>
+	<HystereseTime1>5</HystereseTime1>
+
+	<ThreadID2>BLUETOOTHMANAGER</ThreadID2>
+	<CycleTime2>3000</CycleTime2>
+	<HystereseTime2>500</HystereseTime2>
+
+  <ThreadID3>TCPMANAGER</ThreadID3>
+	<CycleTime3>1</CycleTime3>
+	<HystereseTime3>0</HystereseTime3>
+</Threads>
+
+<MsgMap>
+	<ThreadID>TELLDUSMANAGER</ThreadID>
+  <MsgID1>TELLDUSDEVICE_SET_STATE</MsgID1>
+</MsgMap>
+  
+<MsgMap>
+	<ThreadID>TCPMANAGER</ThreadID>
+	<MsgID1>ARCTECH_SWITCH</MsgID1>
+  <MsgID2>BLUETOOTHDEVICE_IN_RANGE</MsgID2>
+  <MsgID3>MANDOLYN_SENSOR</MsgID3>
+</MsgMap>
+
+</Configuration>
