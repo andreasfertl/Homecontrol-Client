@@ -1,7 +1,10 @@
 # Homecontrol-Client
 Homecontrol Client application running on Linux which provides support for HW dependent modules.
+
 This is an earlier version of the Homecontrol-Server project and has been transformed to a Client module to abstract the HW dependencies / SW dependencies.
+
 This client support local telldus/tellstick lightswitches/remote controllers and does have some dependencies to older SW versions of supporting libraries.
+
 
 See a more precise description of the whole project in the Homecontrol-Server repository
 https://github.com/andreasfertl/Homecontrol-Server
@@ -23,18 +26,26 @@ https://github.com/nlohmann/json
 ### Linux
 On Ubuntu 18.10 i installed via apt these packages to be able to compile the software
 
+telldus
+pre dependencie libconfuse1
 ```
-install dependencies for telldus:
-libconfuse1
 Linux:~/$ dpkg --install http://ftp.de.debian.org/debian/pool/main/c/confuse/libconfuse-common_3.0+dfsg-2+deb9u1_all.deb
 Linux:~/$ dpkg --install http://ftp.us.debian.org/debian/pool/main/c/confuse/libconfuse1_3.0+dfsg-2+deb9u1_amd64.deb
-
-telldus
+```
+prepare apt to be able to install telldus
+```
 Linux:~/$ wget -q http://download.telldus.com/debian/telldus-public.key -O- | sudo apt-key add -
-edit /etc/apt/sources.list to include:
+```
+edit /etc/apt/sources.list to include (add):
+```
 deb http://download.telldus.com/debian/ unstable main
+```
+install telldus
+```
 Linux:~/$ apt install telldus-core libtelldus-core2 libtelldus-core-dev -y
-
+```
+install other dependencies
+```
 Linux:~/$ apt install build-essential libbluetooth-dev libcurl4-openssl-dev libboost-graph-dev libboost-iostreams-dev -y
 ```
 
