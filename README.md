@@ -3,7 +3,7 @@ Homecontrol Client application running on Linux which provides support for HW de
 
 This is an earlier version of the Homecontrol-Server project and has been transformed to a Client module to abstract the HW dependencies / SW dependencies.
 
-This client support local telldus/tellstick lightswitches/remote controllers and does have some dependencies to older SW versions of supporting libraries.
+This client support local telldus/tellstick dependent lightswitches/remote controllers and temperature/humidity sensors and does have some dependencies to older SW versions of supporting libraries.
 
 
 See a more precise description of the whole project in the Homecontrol-Server repository
