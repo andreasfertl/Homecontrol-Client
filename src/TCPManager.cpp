@@ -220,7 +220,10 @@ void TCPManager::Run()
 
 						case MESSAGE::ID::MANDOLYN_SENSOR:
 						{
-							Logger_Write(LoggLevel::ERROR, (std::string)"Trying to send a MANDOLYN_SENSOR MESSAGE");
+							auto sensor = Msg.GetValue<MandolynSensor>();
+							std::ostringstream ostr; ostr << "Sending a MANDOLYN_SENSOR MESSAGE ID: " << sensor.Id() << " Temp: " << sensor.Temp() << " Humidity: " << sensor.Humidity();
+							Logger_Write(LoggLevel::ERROR, ostr.str());
+
 							sendOk = sendMessage<MandolynSensor>(Msg, m_TCPClient);
 							break;
 						}
