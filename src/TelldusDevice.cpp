@@ -22,8 +22,13 @@ TelldusDevice::~TelldusDevice()
 
 bool TelldusDevice::GetLastSentState(int Id)
 {
+#if TELLDUS_ACTIVE
 	return tdLastSentCommand(Id, TELLSTICK_TURNON | TELLSTICK_TURNOFF) == TELLSTICK_TURNON ? true : false;
+#else
+	return false;
+#endif
 }
+
 
 bool TelldusDevice::SetState(bool State)
 {
@@ -34,10 +39,12 @@ bool TelldusDevice::SetState(bool State)
 	{
         for (int i = 0; i < TELLDUSDEVICE_RETRANSMIT; i++)
         {
-            if (State) //should be ON
-                tdTurnOn(m_Id);
-            else //should be OFF
-                tdTurnOff(m_Id);
+#if TELLDUS_ACTIVE
+			if (State) //should be ON
+				tdTurnOn(m_Id);
+			else //should be OFF
+				tdTurnOff(m_Id);
+#endif
             //we changed the state of this device just let the Tellstick a little time to react
             TIMER::Sleep(100);
         }

@@ -104,12 +104,13 @@ namespace TelldusMgr {
 
 TelldusManager::TelldusManager() : thread((std::string)__FILE__, 500, 100, THREADSID::ThreadID::TELLDUSMANAGER)
 {
+#if TELLDUS_ACTIVE
 	//open
 	tdInit();
 
 	int NrOfDevices = tdGetNumberOfDevices();
 
-	//go through all devices
+    //go through all devices
 	for (int i = 0; i < NrOfDevices; i++)
 	{
 		//collect the corresponding data
@@ -126,8 +127,9 @@ TelldusManager::TelldusManager() : thread((std::string)__FILE__, 500, 100, THREA
 		Logger_Write(LoggLevel::DBG2, "Added TelldusDevice with name: " + sName);
 	}
 	
-	
     tdRegisterRawDeviceEvent(&TelldusMgr::RawDeviceEvent, this);
+#endif
+
 }     
 
 
@@ -145,9 +147,11 @@ TelldusManager::~TelldusManager()
 		pTelldusDevice = nullptr;
 	}
 	m_vpTelldusDevices.clear(); //and now we can clear the whole list
-	
+
+#if TELLDUS_ACTIVE
 	//close the connection to the telldusdemon
 	tdClose();
+#endif
 }
 
 

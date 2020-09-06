@@ -16,7 +16,7 @@
 PROGNAME := LinuxClient 
 
 # Pre-processor flags to be used for includes (-I) and defines (-D) 
-CPPFLAGS := -DUSE_BOOST
+CPPFLAGS := -DUSE_BOOST -DTELLDUS_ACTIVE=0
 
 # CFLAGS is used for C compilation options.
 CFLAGS := -Wall -O0
@@ -25,7 +25,8 @@ CFLAGS := -Wall -O0
 CXXFLAGS += -Wall -O0 -std=c++17
 
 # LDFLAGS is used for linker (-g enables debug symbols)
-LDFLAGS  += -lpthread -lcrypto -lssl -lcpprest -lstdc++ -lpthread -ltelldus-core -lcurl -lbluetooth -g
+#LDFLAGS  += -lpthread -lcrypto -lssl -lcpprest -lstdc++ -lpthread -ltelldus-core -lcurl -lbluetooth -g
+LDFLAGS  += -lpthread -lcrypto -lssl -lcpprest -lstdc++ -lpthread -lcurl -lbluetooth -g
 
 # Which Boost modules to use (all)
 BOOST_MODULES = \
