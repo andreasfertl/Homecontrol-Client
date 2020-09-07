@@ -24,8 +24,9 @@ void BluetoothDevice::Init(int Socket, bdaddr_t &BdAddr)
 
 
 //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a string
-BluetoothDevice::BluetoothDevice(int Socket, std::string &sBdAddr) :
-    m_Handle()
+BluetoothDevice::BluetoothDevice(int Socket, int DeviceId, std::string &sBdAddr) :
+    m_Handle(),
+	m_DeviceId(DeviceId)
 {
 	bdaddr_t BdAddr;
 	
@@ -41,8 +42,9 @@ BluetoothDevice::BluetoothDevice(int Socket, std::string &sBdAddr) :
 }
 
 //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a internal format
-BluetoothDevice::BluetoothDevice(int Socket, bdaddr_t BdAddr) :
-    m_Handle()
+BluetoothDevice::BluetoothDevice(int Socket, int DeviceId, bdaddr_t BdAddr) :
+    m_Handle(),
+	m_DeviceId(DeviceId)
 {
 	Init(Socket, BdAddr);
 

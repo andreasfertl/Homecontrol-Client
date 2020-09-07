@@ -68,10 +68,11 @@ typedef struct
 
 typedef struct
 {
-	std::string Name;
+    int         DeviceId;
+    std::string Name;
 	std::string BTDeviceAddr;
 	
-	std::string ToString() {std::ostringstream ostr; ostr << "ConfPerson, Name = " << Name << " BTDeviceAddr = " << BTDeviceAddr; return ostr.str();}
+	std::string ToString() {std::ostringstream ostr; ostr << "ConfPerson, Name = " << Name << " BTDeviceAddr = " << BTDeviceAddr << " DeviceId = " << DeviceId; return ostr.str();}
 }ConfPerson;
 
 typedef struct

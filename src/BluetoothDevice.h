@@ -27,18 +27,20 @@ namespace BLUETOOTHDEVICE
 
 	public:
 		BluetoothDeviceMessage() :
+			deviceId(0),
 			address(0),
 			inRange(false)
 		{
 		}
-		BluetoothDeviceMessage(const std::string& addr, bool inRang) :
+		BluetoothDeviceMessage(int deviceId, const std::string& addr, bool inRange) :
+			deviceId(deviceId),
 			address(addr),
-			inRange(inRang)
+			inRange(inRange)
         {
         }
 
 		json toJson(){
-			return json{ { "$type", "Messanger.Msg, Messanger" },{ "Value",{ { "$type", "Messanger.BluetoothDevMessage, Messanger" },{ "InRange", inRange },{ "BTMacAddr", address } } },{ "Destination", THREADSID::ThreadID::ALL_SUBSCRIBERS },{ "Source", 0 },{ "RemoteHandle", 0 },{ "Command", MESSAGE::CMD::SET },{ "CommandType", MESSAGE::ID::BLUETOOTHDEVICE_IN_RANGE },{ "ObjectType", "Messanger.BluetoothDevMessage, Messanger, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" } };
+			return json{ { "$type", "Messanger.Msg, Messanger" },{ "Value",{ { "$type", "Messanger.BluetoothDevMessage, Messanger" },{ "InRange", inRange },{ "BTMacAddr", address },{ "DeviceId", deviceId } } },{ "Destination", THREADSID::ThreadID::ALL_SUBSCRIBERS },{ "Source", 0 },{ "RemoteHandle", 0 },{ "Command", MESSAGE::CMD::SET },{ "CommandType", MESSAGE::ID::BLUETOOTHDEVICE_IN_RANGE },{ "ObjectType", "Messanger.BluetoothDevMessage, Messanger, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" } };
 		}
 
 
@@ -46,10 +48,11 @@ namespace BLUETOOTHDEVICE
 			try
 			{
 				auto json = json::parse(str);
+				auto deviceId = json.at("DeviceId").get<int>();
 				auto addr = json.at("BTMacAddr").get<std::string>();
 				auto inRange = json.at("InRange").get<bool>();
 
-				return BluetoothDeviceMessage(addr, inRange);
+				return BluetoothDeviceMessage(deviceId, addr, inRange);
 			}
 			catch (...)
 			{
@@ -58,9 +61,9 @@ namespace BLUETOOTHDEVICE
 		}
 
 	private:
+		int         deviceId;
 		std::string address;
 		bool        inRange;
-	
 	};
 }
 
@@ -76,6 +79,7 @@ class BluetoothDevice
       std::string  m_Name;                      //the actual name of the device (will be received from the BTDevice)
 	  Debouncer    m_Deb;
 	  bool         m_InRange;                   //reflects with TRUE or FALSE if the device is in range or not
+	  int          m_DeviceId;
       
       void Init(int Socket, bdaddr_t &BdAddr);  //just a little helper to unify code from several constructors
       bool IsBTDeviceInRange();                 //asks for the name of the BT device to find out if it is in range or not
@@ -85,8 +89,8 @@ class BluetoothDevice
 
    public:
 
-      BluetoothDevice(int Socket, std::string &sBdAddr); //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a string           and a handle to the socket of the BT Dongle
-      BluetoothDevice(int Socket, bdaddr_t BdAddr);      //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a internal format  and a handle to the socket of the BT Dongle
+      BluetoothDevice(int Socket, int DeviceId, std::string &sBdAddr); //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a string           and a handle to the socket of the BT Dongle
+      BluetoothDevice(int Socket, int DeviceId, bdaddr_t BdAddr);      //construct with the BT Address like (28:E1:4C:CA:2F:1D) as a internal format  and a handle to the socket of the BT Dongle
       ~BluetoothDevice();
 
       inline bool operator==(const BluetoothDevice &other) const {return (bacmp(&m_BdAddr, &other.m_BdAddr) == 0);}
@@ -95,9 +99,10 @@ class BluetoothDevice
       bool InRange(unsigned int InRange);               //evaluets the internal representation and returns true or false
       bool DebounceIsInRange(bool *pStateChange);     //asks for name, debounces in Range information and returns true or false to determine if in range or not
 	  
-	  Handle GetHandle() { return m_Handle; };
-	  std::string GetAddress() { return m_Address; };
-	  bdaddr_t GetBdAddress() { return m_BdAddr; };
+	  Handle GetHandle() const { return m_Handle; };
+	  std::string GetAddress() const { return m_Address; };
+	  bdaddr_t GetBdAddress() const { return m_BdAddr; };
+	  int GetDeviceId() const { return m_DeviceId; };
 };
 
 

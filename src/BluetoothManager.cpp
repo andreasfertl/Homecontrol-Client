@@ -33,10 +33,10 @@ BluetoothManager::~BluetoothManager()
 }
 
 
-Handle BluetoothManager::RegisterBTDevice(std::string BTDeviceAddress)
+Handle BluetoothManager::RegisterBTDevice(int DeviceId, std::string BTDeviceAddress)
 {
 	//generate BT device
-	BluetoothDevice *pBTDevice = new BluetoothDevice(m_Socket, BTDeviceAddress);
+	BluetoothDevice *pBTDevice = new BluetoothDevice(m_Socket, DeviceId, BTDeviceAddress);
 	Logger_Write(LoggLevel::LOGFILE, "Added BTDevice with addr " + BTDeviceAddress);
 
     m_vpBTDevice.push_back(pBTDevice); //add to my internal list
@@ -66,7 +66,7 @@ int BluetoothManager::ParseMessage(Message &Msg)
 
 int BluetoothManager::SendRangeChange(BluetoothDevice& BTDevice, bool inRange)
 {
-    BLUETOOTHDEVICE::BluetoothDeviceMessage btDevMsg(BTDevice.GetAddress(), inRange);
+    BLUETOOTHDEVICE::BluetoothDeviceMessage btDevMsg(BTDevice.GetDeviceId(), BTDevice.GetAddress(), inRange);
 	Message Msg {MESSAGE::CMD::SET, THREADSID::ThreadID::ALL_SUBSCRIBERS, GetThreadId(), MESSAGE::ID::BLUETOOTHDEVICE_IN_RANGE, btDevMsg};
     
 	return m_TxQueue.Push(Msg);
@@ -84,7 +84,7 @@ void BluetoothManager::Run()
 		{
 			//check in range
 			bool StateChange = false;
-			bool InRange = pBTDevice->DebounceIsInRange(&StateChange); 
+			bool InRange = pBTDevice->DebounceIsInRange(&StateChange);
 
 			//just send the state, if there was a change
 			if (StateChange)
@@ -94,7 +94,7 @@ void BluetoothManager::Run()
 	
 				//just debug output
 				std::ostringstream strMsg2;
-				strMsg2 << "BtDevice State Change: " << StateChange << " In Range: " << (InRange ? "YES!!!!" : "NO");
+				strMsg2 << "BtDeviceId " << pBTDevice->GetDeviceId() << " State Change: " << StateChange << " In Range: " << (InRange ? "YES!!!!" : "NO");
 				Logger_Write(LoggLevel::DBG2, strMsg2.str());
 			}		
 		}

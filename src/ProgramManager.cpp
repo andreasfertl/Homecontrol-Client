@@ -83,7 +83,7 @@ int ProgramManager::ConfigureSystem(const Config *pConf)
             if (m_pBTManager)
             {
 			    //register BTDevice corresponding to person
-			    BtHandle = m_pBTManager->RegisterBTDevice(person.BTDeviceAddr);
+			    BtHandle = m_pBTManager->RegisterBTDevice(person.DeviceId, person.BTDeviceAddr);
             }
             
 			std::ostringstream strMsg;

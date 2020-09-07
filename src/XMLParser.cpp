@@ -57,6 +57,7 @@ int XMLParser::GetConfigurationFromXML(boost::property_tree::ptree &pt, Configur
 			if(v.first == "Person") //generating a Person
 			{
 				ConfPerson Person;
+				Person.DeviceId = v.second.get<int>("DeviceId");
 				Person.Name = v.second.get<std::string>("Name");
 				Person.BTDeviceAddr = v.second.get<std::string>("BTDeviceAddr");
 				

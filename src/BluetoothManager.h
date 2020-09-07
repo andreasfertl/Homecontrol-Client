@@ -25,7 +25,7 @@ class BluetoothManager : public thread
 		BluetoothManager();
 		virtual ~BluetoothManager();
 		
-		Handle RegisterBTDevice(std::string BTDeviceAddress);
+		Handle RegisterBTDevice(int DeviceId, std::string BTDeviceAddress);
 };
 
 
