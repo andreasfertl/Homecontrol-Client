@@ -20,7 +20,8 @@
 </Person>
   
 <Person>
-  <Name>Phone of ABC</Name>
+	<DeviceId>1</DeviceId>
+	<Name>Phone of ABC</Name>
 	<BTDeviceAddr>AA:BB:CC:DD:EE:FF</BTDeviceAddr>
 </Person>
 
